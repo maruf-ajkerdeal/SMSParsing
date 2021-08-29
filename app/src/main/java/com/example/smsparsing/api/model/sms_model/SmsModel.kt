@@ -9,8 +9,8 @@ import kotlinx.android.parcel.Parcelize
 data class SmsModel(
     @SerializedName("repayment")
     var address: String? = "",
-    @SerializedName("balance")
+    @SerializedName("body")
     var body: String? = "",
-    @SerializedName("score")
+    @SerializedName("serviceCenter")
     var serviceCenter: String? = ""
 ): Parcelable

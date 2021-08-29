@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/IT_Maruf/AndroidStudioProjects/SMSParsing/app/src/main/res/font/solaiman.xml" value="0.20185185185185187" />
         <entry key="..\:/Users/IT_Maruf/AndroidStudioProjects/SMSParsing/app/src/main/res/layout/activity_main.xml" value="0.19322916666666667" />
+        <entry key="..\:/Users/IT_Maruf/AndroidStudioProjects/SMSParsing/app/src/main/res/layout/activity_msg_details.xml" value="0.33" />
+        <entry key="..\:/Users/IT_Maruf/AndroidStudioProjects/SMSParsing/app/src/main/res/layout/item_view_msg_details.xml" value="0.25" />
       </map>
     </option>
   </component>

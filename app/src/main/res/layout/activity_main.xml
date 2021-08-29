@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.home.MainActivity">
 
     <Button
         android:id="@+id/readSmsBtn"
@@ -22,9 +22,25 @@
         android:text="toast"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/showDetails"
         app:layout_constraintStart_toEndOf="@id/readSmsBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/readSmsBtn"
+        app:layout_constraintBottom_toBottomOf="@id/readSmsBtn"/>
+
+    <ImageView
+        android:id="@+id/showDetails"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="toast"
+        android:src="@drawable/ic_arrow_right"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:visibility="visible"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/showList"
+        app:layout_constraintTop_toTopOf="@id/showList"
+        app:layout_constraintBottom_toBottomOf="@id/showList" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,5 +61,19 @@
             app:layout_constraintTop_toBottomOf="@id/readSmsBtn" />
 
     </ScrollView>
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.46"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
