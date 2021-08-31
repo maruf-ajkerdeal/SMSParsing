@@ -34,7 +34,7 @@ class MsgDetailsActivity : AppCompatActivity() {
             adapter = dataAdapter
         }
 
-        Timber.d("requestBody 2 $messageData")
+        //Timber.d("requestBody 2 $messageData")
 
         loadData()
 

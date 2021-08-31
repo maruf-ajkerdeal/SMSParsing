@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smsparsing.R
 import com.example.smsparsing.api.model.sms_model.SmsModel
 import com.example.smsparsing.databinding.ItemViewMsgDetailsBinding
+import timber.log.Timber
 import java.util.*
 
 class MsgDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -16,6 +17,12 @@ class MsgDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val checkList: MutableList<String> = mutableListOf()
     private val creditList: MutableList<String> = mutableListOf()
     private val debitList: MutableList<String> = mutableListOf()
+
+    private var totalMessageCount = 0
+    private var totalCreditMessageCount = 0
+    private var totalDebitMessageCount = 0
+    private var totalCreditAmount = 0
+    private var totalDebitAmount = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(ItemViewMsgDetailsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -44,23 +51,35 @@ class MsgDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             if (((model.body)?.contains(amountCheck) == true) ) {
                 for (i in checkList) {
                     if (((model.body)?.lowercase(Locale.getDefault())?.contains(i) == true)) {
-                        binding?.msgAddress?.text = model.address
-                        binding?.serviceCenter?.text = model.serviceCenter
-                        binding?.msgBody?.text = model.body
-                        binding?.msgBody?.setTextColor(ContextCompat.getColor( binding?.msgBody?.context, R.color.black_80))
+                        binding.msgAddress.text = model.address
+                        binding.serviceCenter.text = model.serviceCenter
+                        binding.msgBody.text = model.body
+                        binding.msgBody.setTextColor(ContextCompat.getColor( binding.msgBody.context, R.color.black_80))
+
+                        val amountCheckTest = """((\d+,\d+)*(\d+\.\d+))""".toRegex()
+                        val tempData : MatchResult? = amountCheckTest.find(model.body.toString())
+                        //Timber.d("requestBody single ${tempData?.value}")
+
+                        val tempData1 : Sequence<MatchResult> = amountCheckTest.findAll(model.body.toString())
+                        tempData1.forEach()
+                        {
+                            Timber.d("requestBody ${it.value}")
+                                //matchResult -> Timber.d("requestBody ${matchResult.value}")
+                        }
+
                         break
                     } else {
-                        binding?.msgAddress?.text = model.address
-                        binding?.serviceCenter?.text = model.serviceCenter
-                        binding?.msgBody?.text = model.body
-                        binding?.msgBody?.setTextColor(Color.BLUE)
+                        binding.msgAddress.text = model.address
+                        binding.serviceCenter.text = model.serviceCenter
+                        binding.msgBody.text = model.body
+                        binding.msgBody.setTextColor(Color.BLUE)
                     }
                 }
             } else {
-                binding?.msgAddress?.text = model.address
-                binding?.serviceCenter?.text = model.serviceCenter
-                binding?.msgBody?.text = model.body
-                binding?.msgBody?.setTextColor(Color.BLUE)
+                binding.msgAddress.text = model.address
+                binding.serviceCenter.text = model.serviceCenter
+                binding.msgBody.text = model.body
+                binding.msgBody.setTextColor(Color.BLUE)
                 //dataList.removeAt(position)
             }
 

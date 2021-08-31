@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding?.showDetails?.setOnClickListener {
-            Timber.d("requestBody 1 $messageData")
+            //Timber.d("requestBody 1 $messageData")
             if (!bundle.isEmpty) {
                 val intent = Intent(this, MsgDetailsActivity::class.java)
                 intent.putExtra("bundle", bundle)
@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity() {
             var msgData = ""
             idListOfSMS.clear()
             messageData.clear()
+            totalMatchedDataFound = 0
 
 
             withContext(Dispatchers.Main) {
