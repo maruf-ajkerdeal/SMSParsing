@@ -21,8 +21,14 @@ class MsgDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var totalMessageCount = 0
     private var totalCreditMessageCount = 0
     private var totalDebitMessageCount = 0
-    private var totalCreditAmount = 0
-    private var totalDebitAmount = 0
+    private var totalCreditAmount = 0.00
+    private var totalDebitAmount = 0.00
+
+    var onTotalMessageCount: ((totalMessageCount: Int) -> Unit)? = null
+    var onTotalCreditMessageCount: ((creditMessageCount: Int) -> Unit)? = null
+    var onTotalDebitMessageCount: ((debitMessageCount: Int) -> Unit)? = null
+    var onTotalCreditAmount: ((creditAmount: Double) -> Unit)? = null
+    var onTotalDebitAmount: ((debitAmount: Double) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(ItemViewMsgDetailsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -56,16 +62,28 @@ class MsgDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         binding.msgBody.text = model.body
                         binding.msgBody.setTextColor(ContextCompat.getColor( binding.msgBody.context, R.color.black_80))
 
+                        totalCreditMessageCount += 1
+
                         val amountCheckTest = """((\d+,\d+)*(\d+\.\d+))""".toRegex()
-                        val tempData : MatchResult? = amountCheckTest.find(model.body.toString())
+                        //val tempData : MatchResult? = amountCheckTest.find(model.body.toString())
                         //Timber.d("requestBody single ${tempData?.value}")
 
-                        val tempData1 : Sequence<MatchResult> = amountCheckTest.findAll(model.body.toString())
-                        tempData1.forEach()
+                        val tempData : Sequence<MatchResult> = amountCheckTest.findAll(model.body.toString())
+                        var tempAmount = 0.00
+                        tempData.forEach()
                         {
                             Timber.d("requestBody ${it.value}")
-                                //matchResult -> Timber.d("requestBody ${matchResult.value}")
+                            if (it.value.contains(",")) {
+                                var tempString = it.value
+                                Timber.d("requestBody string $tempString")
+                                tempString = tempString.replace(",", "")
+                                Timber.d("requestBody string $tempString")
+                                tempAmount = tempString.toDouble()
+                            }
+                            //matchResult -> Timber.d("requestBody ${matchResult.value}")
                         }
+
+                        totalCreditAmount += tempAmount
 
                         break
                     } else {
@@ -83,12 +101,15 @@ class MsgDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 //dataList.removeAt(position)
             }
 
+
         }
     }
 
     private inner class ViewHolder(val binding: ItemViewMsgDetailsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
+            onTotalCreditAmount?.invoke(totalCreditAmount)
+            onTotalCreditMessageCount?.invoke(totalCreditMessageCount)
 
             /*binding.nextQuestion.setOnClickListener {
                 if (onOptionsSelected != null) {
